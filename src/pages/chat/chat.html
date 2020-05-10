@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="chat.members[0].userId !== user.userId"> {{ chat.members[0].userId }} </ion-title>
+    <ion-title *ngIf="chat.members[0].userId === user.userId"> {{ chat.members[1].userId }} </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content class="home">
+  <ion-list>
+    <ion-item
+      *ngFor="let message of messages"
+      [ngClass]="{'-left': message._sender.userId !== user.userId }"
+      >
+        <ion-avatar *ngIf="message._sender.userId !== user.userId" item-start> <img src="{{ message._sender.profileUrl }}"> </ion-avatar>
+        {{ message.message }}
+        <ion-avatar *ngIf="message._sender.userId === user.userId" item-end> <img src="{{ message._sender.profileUrl }}"> </ion-avatar>
+    </ion-item>
+  </ion-list>
+</ion-content>
+  
+<ion-footer>
+  <ion-toolbar>
+    <ion-input type="text" placeholder="Message..." [(ngModel)]="chatBox"></ion-input>
+    <ion-buttons end>
+      <button ion-button icon-only (tap)="sendMessage(chatBox)">
+          <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
